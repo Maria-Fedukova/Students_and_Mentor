@@ -7,8 +7,9 @@ class Student:
         self.finished_courses = []
         self.courses_in_progress = []
         self.grades = {}
+        self.student_list = []
 
-# Метод, добавляющий курс в список законченных курсов
+    # Метод, добавляющий курс в список законченных курсов
     def add_courses(self, course_name):
         self.finished_courses.append(course_name)
 
@@ -54,7 +55,8 @@ class Mentor:
 class Lecturer(Mentor):
     def __init__(self, name, surname):
         super().__init__(name, surname)
-        self.grades = []
+        self.grades = {}
+
 
     def average_grades(self):
         if not self.grades:
@@ -162,3 +164,29 @@ print('')
 print(some_reviewer)
 
 
+
+def average_grade_hw(student_list, course):
+        total_grades = []
+        for student in student_list:
+            if course in student.courses_in_progress and student.grades.get(course) is not None:
+                total_grades += student.grades.get(course)
+        if sum(total_grades) != 0:
+            print(f'Общая средняя оценка за дз по {course} : {round(sum(total_grades) / len(total_grades), 1)}')
+        else:
+          print('Нет оценок')
+
+
+def average_grade_lecturer(lecturer_list, course):
+        total_grades = []
+        for lecturer in lecturer_list:
+            if course in lecturer.courses_attached and lecturer.grades.get(course) is not None:
+                total_grades += lecturer.grades.get(course)
+        if sum(total_grades) != 0:
+            print(f'Общая средняя оценка за лекции по {course} : {round(sum(total_grades) / len(total_grades), 1)}')
+        else:
+          print('Нет оценок')
+
+average_grade_hw([best_student, some_student],'Python')
+average_grade_hw([best_student, some_student],'Git')
+average_grade_lecturer([best_lector,some_lecturer],'Python')
+average_grade_lecturer([best_lector,some_lecturer],'Git')
